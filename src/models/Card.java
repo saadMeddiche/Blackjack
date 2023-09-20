@@ -1,6 +1,6 @@
 package models;
 
-import java.util.Objects;
+import java.util.List;
 
 public class Card {
     private Integer rank;
@@ -29,6 +29,7 @@ public class Card {
     public void setSuit(Integer suit) {
         this.suit = suit;
     }
+
 
     @Override
     public String toString() {
