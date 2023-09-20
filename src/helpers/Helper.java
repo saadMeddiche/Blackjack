@@ -2,23 +2,27 @@ package helpers;
 
 public class Helper {
 
+    public static Integer randomNumber(Integer from, Integer to) {
+
+        return (int) Math.floor(Math.random() * (to - from + 1) + from);
+
+    }
+
     public static void main(String[] args) throws Exception {
 
-        // Integer from = 1;
-        // Integer to = 13;
+        // System.out.println(randomNumber(10, 20));
 
-        // Integer multiplier = 7;
-        // Integer increment = 13;
-        // Integer modulus = 10;
+        Integer from = 1;
+        Integer to = 13;
 
-        // for (int i = 0; i < 100; i++) {
-        //     long time = System.currentTimeMillis();
+        // for (int i = 0; i < 500; i++) {
+        long time = System.currentTimeMillis();
 
-        //     int seed = (int) (time % 1000);
+        Double seed = (Double) (time % 0.8555);
 
-        //     int randomNumber = (multiplier * seed + increment) % modulus;
+        int randomNumber = (int) Math.floor(seed * (to - from + 1) + from);
 
-        //     System.out.println(randomNumber);
+        System.out.println(randomNumber);
         // }
 
     }
