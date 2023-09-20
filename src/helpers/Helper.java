@@ -8,12 +8,7 @@ public class Helper {
 
     }
 
-    public static void main(String[] args) throws Exception {
-
-        // System.out.println(randomNumber(10, 20));
-
-        Integer from = 1;
-        Integer to = 13;
+    public static Integer myRandomNumber(Integer from, Integer to) {
 
         // for (int i = 0; i < 500; i++) {
         long time = System.currentTimeMillis();
@@ -22,8 +17,12 @@ public class Helper {
 
         int randomNumber = (int) Math.floor(seed * (to - from + 1) + from);
 
-        System.out.println(randomNumber);
+        return randomNumber;
         // }
+
+    }
+
+    public static void main(String[] args) throws Exception {
 
     }
 }

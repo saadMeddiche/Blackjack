@@ -3,6 +3,9 @@ package repository;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import helpers.Helper;
 import models.Card;
 
 public class CardRepository {
@@ -10,6 +13,12 @@ public class CardRepository {
     public static void main(String[] args) throws Exception {
         Integer[][] cards = create_52card_deck();
         display(cards);
+
+        Integer[] randomCard = extract_card(cards);
+        System.out.println("=======Random Card=======");
+        System.out.println("Rank" + randomCard[0]);
+        System.out.println("Suit" + randomCard[1]);
+
     }
 
     public static Integer[][] create_52card_deck() {
@@ -30,6 +39,25 @@ public class CardRepository {
         return a52cardDeck;
     }
 
+    public static Integer[] extract_card(Integer[][] cards) {
+
+        int randomIndex = Helper.myRandomNumber(0, cards.length - 1);
+
+        Integer[] randomCard = cards[randomIndex];
+
+        Integer[][] remainingCards = new Integer[cards.length - 1][];
+
+        for (int i = 0; i < randomIndex; i++) {
+            remainingCards[i] = cards[i];
+        }
+
+        for (int i = randomIndex + 1; i < cards.length; i++) {
+            remainingCards[i - 1] = cards[i];
+        }
+
+        return null;
+    }
+
     public static void display(Integer[][] cards) {
         for (int i = 0; i < cards.length; i++) {
             System.out.println("======Card======");
@@ -39,4 +67,5 @@ public class CardRepository {
             System.out.println();
         }
     }
+
 }
