@@ -12,7 +12,6 @@ public class CardRepository {
         display(cards);
     }
 
-    
     public static Integer[][] create_52card_deck() {
 
         Integer[][] a52cardDeck = new Integer[52][2];
@@ -30,8 +29,6 @@ public class CardRepository {
 
         return a52cardDeck;
     }
-
-
 
     public static void display(Integer[][] cards) {
         for (int i = 0; i < cards.length; i++) {
