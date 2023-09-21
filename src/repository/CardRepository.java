@@ -38,7 +38,8 @@ public class CardRepository {
 
         Integer[][] test = new Integer[0][];
 
-        Integer[][] discradedCards = discard_card(results1.drawedCards, results1.remainingCards, test);
+        Integer[][] discradedCards = discard_card(results1.drawedCards,
+        results1.remainingCards, test);
         display(discradedCards);
     }
 
@@ -63,23 +64,17 @@ public class CardRepository {
     public static Integer[][] discard_card(Integer[][] usedCards, Integer[][] inHandCards, Integer[][] drawedCards) {
 
         Integer[][] discradedCards = new Integer[usedCards.length + inHandCards.length + drawedCards.length][2];
-        Integer[][][] test = { usedCards, inHandCards, drawedCards };
+
+        Integer[][][] allCards = { usedCards, inHandCards, drawedCards };
 
         int indexOfDeck = 0;
 
-        for (int i = 0; i < usedCards.length; i++) {
-            discradedCards[indexOfDeck] = usedCards[i];
-            indexOfDeck++;
-        }
+        for (Integer[][] cards : allCards) {
 
-        for (int i = 0; i < inHandCards.length; i++) {
-            discradedCards[indexOfDeck] = inHandCards[i];
-            indexOfDeck++;
-        }
-
-        for (int i = 0; i < drawedCards.length; i++) {
-            discradedCards[indexOfDeck] = drawedCards[i];
-            indexOfDeck++;
+            for (int i = 0; i < cards.length; i++) {
+                discradedCards[indexOfDeck] = cards[i];
+                indexOfDeck++;
+            }
         }
 
         return discradedCards;
@@ -92,6 +87,7 @@ public class CardRepository {
         Integer[][] remainingCards = new Integer[cards.length - numberOfCardsShouldDrawed][2];
 
         int indexOfCard = 0;
+
         for (int i = 0; i < drawedCards.length; i++) {
             drawedCards[i] = cards[indexOfCard];
             indexOfCard++;
