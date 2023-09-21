@@ -34,6 +34,12 @@ public class CardRepository {
         System.out.println("=======Remaining Card=======");
         display(results1.remainingCards);
 
+        System.out.println("=======Discarded Card=======");
+
+        Integer[][] test = new Integer[0][];
+
+        Integer[][] discradedCards = discard_card(results1.drawedCards, results1.remainingCards, test);
+        display(discradedCards);
     }
 
     public static Integer[][] create_52card_deck() {
@@ -56,28 +62,27 @@ public class CardRepository {
 
     public static Integer[][] discard_card(Integer[][] usedCards, Integer[][] inHandCards, Integer[][] drawedCards) {
 
-        Integer[][] deck = new Integer[usedCards.length + inHandCards.length + drawedCards.length][2];
+        Integer[][] discradedCards = new Integer[usedCards.length + inHandCards.length + drawedCards.length][2];
+        Integer[][][] test = { usedCards, inHandCards, drawedCards };
 
         int indexOfDeck = 0;
-        
+
         for (int i = 0; i < usedCards.length; i++) {
-            deck[indexOfDeck] = usedCards[i];
+            discradedCards[indexOfDeck] = usedCards[i];
             indexOfDeck++;
         }
 
         for (int i = 0; i < inHandCards.length; i++) {
-            deck[indexOfDeck] = inHandCards[i];
+            discradedCards[indexOfDeck] = inHandCards[i];
             indexOfDeck++;
-
         }
 
         for (int i = 0; i < drawedCards.length; i++) {
-            deck[indexOfDeck] = drawedCards[i];
+            discradedCards[indexOfDeck] = drawedCards[i];
             indexOfDeck++;
-
         }
 
-        return deck;
+        return discradedCards;
     }
 
     public static twoArrays draw_card(Integer[][] cards, Integer numberOfCardsShouldDrawed) {
@@ -119,7 +124,7 @@ public class CardRepository {
 
     public static twoArrays pull_card(Integer[][] cards) {
 
-        int randomIndex = Helper.randomNumber(0, cards.length - 1);
+        int randomIndex = Helper.myRandomNumber(0, cards.length - 1);
 
         twoArrays results = extract_card(cards, randomIndex);
 
