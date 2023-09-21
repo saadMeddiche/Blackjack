@@ -10,6 +10,7 @@ public class GamePlay {
         while (true) {
             View.lobby();
 
+            View.start();
         }
     }
 

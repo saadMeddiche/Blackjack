@@ -37,6 +37,19 @@ public class CardRepository {
         display(discradedCards);
     }
 
+    public static twoArrays get_prepared_cards() {
+
+        Integer[][] a52cardDeck = create_52card_deck();
+
+        Integer[][] mixedCards = mix_cards(a52cardDeck);
+
+        Integer numberOfCardsShouldDrawed = Helper.randomNumber(30, 40);
+
+        twoArrays results = draw_card(mixedCards, numberOfCardsShouldDrawed);
+
+        return results;
+    }
+
     public static Integer[][] create_52card_deck() {
 
         Integer[][] a52cardDeck = new Integer[52][2];
@@ -153,7 +166,7 @@ public class CardRepository {
         }
     }
 
-    static class twoArrays {
+    public static class twoArrays {
         public Integer[] randomCard;
         public Integer[][] remainingCards;
         public Integer[][] drawedCards;
