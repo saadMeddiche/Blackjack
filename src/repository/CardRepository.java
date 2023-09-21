@@ -14,10 +14,13 @@ public class CardRepository {
         Integer[][] cards = create_52card_deck();
         display(cards);
 
-        Integer[] randomCard = extract_card(cards);
+        twoArrays results = extract_card(cards);
         System.out.println("=======Random Card=======");
-        System.out.println("Rank" + randomCard[0]);
-        System.out.println("Suit" + randomCard[1]);
+        System.out.println("Rank" + results.randomCard[0]);
+        System.out.println("Suit" + results.randomCard[1]);
+
+        System.out.println("=======Remaining Card=======");
+        display(results.remainingCards);
 
     }
 
@@ -39,7 +42,7 @@ public class CardRepository {
         return a52cardDeck;
     }
 
-    public static Integer[] extract_card(Integer[][] cards) {
+    public static twoArrays extract_card(Integer[][] cards) {
 
         int randomIndex = Helper.myRandomNumber(0, cards.length - 1);
 
@@ -55,7 +58,17 @@ public class CardRepository {
             remainingCards[i - 1] = cards[i];
         }
 
-        return null;
+        return new twoArrays(randomCard, remainingCards);
+    }
+
+    static class twoArrays {
+        public Integer[] randomCard;
+        public Integer[][] remainingCards;
+
+        public twoArrays(Integer[] arr1, Integer[][] arr2) {
+            this.randomCard = arr1;
+            this.remainingCards = arr2;
+        }
     }
 
     public static void display(Integer[][] cards) {

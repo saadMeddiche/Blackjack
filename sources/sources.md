@@ -11,3 +11,7 @@ Source 1: https://www.geeksforgeeks.org/multidimensional-arrays-in-java/
 # Random Number Generator
 
 Source 1: https://www.freecodecamp.org/news/random-number-generator/
+
+# Static Nested Class (Can You make class inside class in java)
+
+Source 1: https://www.javatpoint.com/static-nested-class#:~:text=Java%20static%20nested%20class,the%20outer%20class%2C%20including%20private.
