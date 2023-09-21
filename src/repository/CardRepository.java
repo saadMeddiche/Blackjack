@@ -1,12 +1,6 @@
 package repository;
 
-import java.sql.Array;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import helpers.Helper;
-import models.Card;
 
 public class CardRepository {
 
@@ -39,7 +33,7 @@ public class CardRepository {
         Integer[][] test = new Integer[0][];
 
         Integer[][] discradedCards = discard_card(results1.drawedCards,
-        results1.remainingCards, test);
+                results1.remainingCards, test);
         display(discradedCards);
     }
 
