@@ -26,6 +26,14 @@ public class CardRepository {
         Integer[][] mixedCards = mix_cards(cards);
         display(mixedCards);
 
+        twoArrays results1 = draw_card(mixedCards, 2);
+
+        System.out.println("=======Drawed Card=======");
+        display(results1.drawedCards);
+
+        System.out.println("=======Remaining Card=======");
+        display(results1.remainingCards);
+
     }
 
     public static Integer[][] create_52card_deck() {
@@ -50,7 +58,24 @@ public class CardRepository {
 
     }
 
-    public static void draw_card() {
+    public static twoArrays draw_card(Integer[][] cards, Integer numberOfCardsShouldDrawed) {
+
+        Integer[][] drawedCards = new Integer[numberOfCardsShouldDrawed][2];
+
+        Integer[][] remainingCards = new Integer[52 - numberOfCardsShouldDrawed][2];
+
+        int indexOfCard = 0;
+        for (int i = 0; i < drawedCards.length; i++) {
+            drawedCards[i] = cards[indexOfCard];
+            indexOfCard++;
+        }
+
+        for (int i = 0; i < remainingCards.length; i++) {
+            remainingCards[i] = cards[indexOfCard];
+            indexOfCard++;
+        }
+
+        return new twoArrays(drawedCards, remainingCards);
 
     }
 
@@ -104,9 +129,15 @@ public class CardRepository {
     static class twoArrays {
         public Integer[] randomCard;
         public Integer[][] remainingCards;
+        public Integer[][] drawedCards;
 
         public twoArrays(Integer[] arr1, Integer[][] arr2) {
             this.randomCard = arr1;
+            this.remainingCards = arr2;
+        }
+
+        public twoArrays(Integer[][] arr1, Integer[][] arr2) {
+            this.drawedCards = arr1;
             this.remainingCards = arr2;
         }
     }
