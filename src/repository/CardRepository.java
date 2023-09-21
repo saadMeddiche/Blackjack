@@ -14,13 +14,17 @@ public class CardRepository {
         Integer[][] cards = create_52card_deck();
         display(cards);
 
-        twoArrays results = extract_card(cards);
+        twoArrays results = pull_card(cards);
         System.out.println("=======Random Card=======");
         System.out.println("Rank" + results.randomCard[0]);
         System.out.println("Suit" + results.randomCard[1]);
 
         System.out.println("=======Remaining Card=======");
         display(results.remainingCards);
+
+        System.out.println("=======Mixed Card=======");
+        Integer[][] mixedCards = mix_cards(cards);
+        display(mixedCards);
 
     }
 
@@ -42,9 +46,33 @@ public class CardRepository {
         return a52cardDeck;
     }
 
+    public static void discard_card() {
+
+    }
+
+    public static void draw_card() {
+
+    }
+
+    public static Integer[][] mix_cards(Integer[][] cards) {
+
+        Integer[][] mixedCard = new Integer[52][2];
+
+        twoArrays results = pull_card(cards);
+
+        for (int i = 0; i < cards.length; i++) {
+
+            mixedCard[i] = results.randomCard;
+
+            results = pull_card(results.remainingCards);
+        }
+
+        return mixedCard;
+    }
+
     public static twoArrays pull_card(Integer[][] cards) {
 
-        int randomIndex = Helper.myRandomNumber(0, cards.length - 1);
+        int randomIndex = Helper.randomNumber(0, cards.length - 1);
 
         twoArrays results = extract_card(cards, randomIndex);
 
@@ -52,6 +80,11 @@ public class CardRepository {
     }
 
     public static twoArrays extract_card(Integer[][] cards, int randomIndex) {
+
+        // i didn't do this from first , untile an error appeared
+        if (cards.length == 0) {
+            return null;
+        }
 
         Integer[] randomCard = cards[randomIndex];
 
@@ -80,7 +113,7 @@ public class CardRepository {
 
     public static void display(Integer[][] cards) {
         for (int i = 0; i < cards.length; i++) {
-            System.out.println("======Card======");
+            System.out.println("======Card" + i + "======");
             System.out.println("Rank:" + cards[i][0]);
             System.out.println("Suit:" + cards[i][1]);
             System.out.println("================");
