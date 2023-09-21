@@ -42,9 +42,16 @@ public class CardRepository {
         return a52cardDeck;
     }
 
-    public static twoArrays extract_card(Integer[][] cards) {
+    public static twoArrays pull_card(Integer[][] cards) {
 
         int randomIndex = Helper.myRandomNumber(0, cards.length - 1);
+
+        twoArrays results = extract_card(cards, randomIndex);
+
+        return results;
+    }
+
+    public static twoArrays extract_card(Integer[][] cards, int randomIndex) {
 
         Integer[] randomCard = cards[randomIndex];
 
