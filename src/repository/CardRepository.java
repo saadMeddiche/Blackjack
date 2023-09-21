@@ -54,15 +54,37 @@ public class CardRepository {
         return a52cardDeck;
     }
 
-    public static void discard_card() {
+    public static Integer[][] discard_card(Integer[][] usedCards, Integer[][] inHandCards, Integer[][] drawedCards) {
 
+        Integer[][] deck = new Integer[usedCards.length + inHandCards.length + drawedCards.length][2];
+
+        int indexOfDeck = 0;
+        
+        for (int i = 0; i < usedCards.length; i++) {
+            deck[indexOfDeck] = usedCards[i];
+            indexOfDeck++;
+        }
+
+        for (int i = 0; i < inHandCards.length; i++) {
+            deck[indexOfDeck] = inHandCards[i];
+            indexOfDeck++;
+
+        }
+
+        for (int i = 0; i < drawedCards.length; i++) {
+            deck[indexOfDeck] = drawedCards[i];
+            indexOfDeck++;
+
+        }
+
+        return deck;
     }
 
     public static twoArrays draw_card(Integer[][] cards, Integer numberOfCardsShouldDrawed) {
 
         Integer[][] drawedCards = new Integer[numberOfCardsShouldDrawed][2];
 
-        Integer[][] remainingCards = new Integer[52 - numberOfCardsShouldDrawed][2];
+        Integer[][] remainingCards = new Integer[cards.length - numberOfCardsShouldDrawed][2];
 
         int indexOfCard = 0;
         for (int i = 0; i < drawedCards.length; i++) {
@@ -81,7 +103,7 @@ public class CardRepository {
 
     public static Integer[][] mix_cards(Integer[][] cards) {
 
-        Integer[][] mixedCard = new Integer[52][2];
+        Integer[][] mixedCard = new Integer[cards.length][2];
 
         twoArrays results = pull_card(cards);
 
@@ -126,22 +148,6 @@ public class CardRepository {
         return new twoArrays(randomCard, remainingCards);
     }
 
-    static class twoArrays {
-        public Integer[] randomCard;
-        public Integer[][] remainingCards;
-        public Integer[][] drawedCards;
-
-        public twoArrays(Integer[] arr1, Integer[][] arr2) {
-            this.randomCard = arr1;
-            this.remainingCards = arr2;
-        }
-
-        public twoArrays(Integer[][] arr1, Integer[][] arr2) {
-            this.drawedCards = arr1;
-            this.remainingCards = arr2;
-        }
-    }
-
     public static void display(Integer[][] cards) {
         for (int i = 0; i < cards.length; i++) {
             System.out.println("======Card" + i + "======");
@@ -149,6 +155,22 @@ public class CardRepository {
             System.out.println("Suit:" + cards[i][1]);
             System.out.println("================");
             System.out.println();
+        }
+    }
+
+    static class twoArrays {
+        public Integer[] randomCard;
+        public Integer[][] remainingCards;
+        public Integer[][] drawedCards;
+
+        public twoArrays(Integer[] randomCard, Integer[][] remainingCards) {
+            this.randomCard = randomCard;
+            this.remainingCards = remainingCards;
+        }
+
+        public twoArrays(Integer[][] drawedCards, Integer[][] remainingCards) {
+            this.drawedCards = drawedCards;
+            this.remainingCards = remainingCards;
         }
     }
 
