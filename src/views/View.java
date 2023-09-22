@@ -119,6 +119,21 @@ public class View {
 
     }
 
+    public static void cardShape(int r, int s) {
+
+        String x = "\u2666";
+        ViewHelper.colorText("\u001b[47;1m----------------", "red");
+        ViewHelper.colorText("\u001b[47;1m                ", "red");
+        ViewHelper.colorText("\u001b[47;1m                ", "red");
+        ViewHelper.colorText("\u001b[47;1m                ", "red");
+        ViewHelper.colorText("\u001b[47;1m    -> Rank:    ", "red");
+        ViewHelper.colorText("\u001b[47;1m    -> Suit:    ", "red");
+        ViewHelper.colorText("\u001b[47;1m         ♦️      ", "red");
+        ViewHelper.colorText("\u001b[47;1m                ", "red");
+        ViewHelper.colorText("\u001b[47;1m                ", "red");
+        ViewHelper.colorText("\u001b[47;1m----------------", "red");
+        
+    }
     public static void showCardsInHands() {
 
         ViewHelper.clearConsole();
@@ -127,11 +142,9 @@ public class View {
 
         for (Integer[] card : dealerCards) {
 
-            ViewHelper.colorText("=====Card=====", "green");
-            System.out.println("-> Rank:" + card[0]);
-            System.out.println("-> Suit:" + card[1]);
-            ViewHelper.colorText("==============", "green");
+            cardShape(card[0], card[1]);
 
+            System.out.println();
         }
 
         ViewHelper.colorText("Player Hand (" + playedCards.length + ")", "yellow");
@@ -179,7 +192,7 @@ public class View {
         long startTime = System.currentTimeMillis();
         long periodBetweenPastAndFuture = 0;
 
-        while (periodBetweenPastAndFuture < 3000) {
+        while (periodBetweenPastAndFuture < 0) {
 
             System.out.print("\r" + symbols[symbolIndex]);
 
