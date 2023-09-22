@@ -11,6 +11,10 @@ public class GamePlay {
             View.lobby();
 
             View.start();
+
+            View.distribute_cards();
+
+            View.showCardsInHands();
         }
     }
 

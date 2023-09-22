@@ -10,8 +10,8 @@ public class CardRepository {
 
         twoArrays results = pull_card(cards);
         System.out.println("=======Random Card=======");
-        System.out.println("Rank" + results.randomCard[0]);
-        System.out.println("Suit" + results.randomCard[1]);
+        System.out.println("Rank" + results.card[0]);
+        System.out.println("Suit" + results.card[1]);
 
         System.out.println("=======Remaining Card=======");
         display(results.remainingCards);
@@ -117,7 +117,7 @@ public class CardRepository {
 
         for (int i = 0; i < cards.length; i++) {
 
-            mixedCard[i] = results.randomCard;
+            mixedCard[i] = results.card;
 
             results = pull_card(results.remainingCards);
         }
@@ -134,26 +134,41 @@ public class CardRepository {
         return results;
     }
 
-    public static twoArrays extract_card(Integer[][] cards, int randomIndex) {
+    public static twoArrays extract_card(Integer[][] cards, int index) {
 
         // i didn't do this from first , untile an error appeared
         if (cards.length == 0) {
             return null;
         }
 
-        Integer[] randomCard = cards[randomIndex];
+        Integer[] card = cards[index];
 
         Integer[][] remainingCards = new Integer[cards.length - 1][];
 
-        for (int i = 0; i < randomIndex; i++) {
+        for (int i = 0; i < index; i++) {
             remainingCards[i] = cards[i];
         }
 
-        for (int i = randomIndex + 1; i < cards.length; i++) {
+        for (int i = index + 1; i < cards.length; i++) {
             remainingCards[i - 1] = cards[i];
         }
 
-        return new twoArrays(randomCard, remainingCards);
+        return new twoArrays(card, remainingCards);
+    }
+
+    public static Integer[][] add_card_to_collection(Integer[][] collection, Integer[] card) {
+
+        int collectionLenght = collection != null ? collection.length : 0;
+
+        Integer[][] newCollection = new Integer[collectionLenght + 1][2];
+
+        for (int i = 0; i < collectionLenght; i++) {
+            newCollection[i] = collection[i];
+        }
+
+        newCollection[collectionLenght] = card;
+
+        return newCollection;
     }
 
     public static void display(Integer[][] cards) {
@@ -167,12 +182,12 @@ public class CardRepository {
     }
 
     public static class twoArrays {
-        public Integer[] randomCard;
+        public Integer[] card;
         public Integer[][] remainingCards;
         public Integer[][] drawedCards;
 
-        public twoArrays(Integer[] randomCard, Integer[][] remainingCards) {
-            this.randomCard = randomCard;
+        public twoArrays(Integer[] card, Integer[][] remainingCards) {
+            this.card = card;
             this.remainingCards = remainingCards;
         }
 
