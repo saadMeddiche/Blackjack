@@ -1,9 +1,6 @@
 package views;
 
-import java.util.Random;
 import java.util.Scanner;
-
-import helpers.Helper;
 import helpers.ViewHelper;
 import repository.CardRepository;
 
@@ -28,7 +25,7 @@ public class View {
         ViewHelper.stopProgramUntilButtonIsCliqued("Press Enter To Start ...");
     }
 
-    public static void start() throws Exception {
+    public static void mixing_cards() throws Exception {
 
         CardRepository.twoArrays results = CardRepository.get_prepared_cards();
 
@@ -49,6 +46,56 @@ public class View {
 
         Thread.sleep(2000);
 
+    }
+
+    public static void play_round() {
+
+        while (true) {
+            showCardsInHands();
+
+            control_panel();
+
+            ViewHelper.clearConsole();
+        }
+
+    }
+
+    public static void control_panel() {
+
+        ViewHelper.colorText("======================", "purple");
+        ViewHelper.colorText("1. Hit", "purple");
+        ViewHelper.colorText("2. Stand", "purple");
+        ViewHelper.colorText("3. Double Down", "purple");
+        ViewHelper.colorText("4. Split", "purple");
+
+        Scanner scanner = new Scanner(System.in);
+
+        ViewHelper.colorText("==> Your Move :", "purple");
+        Integer choice = Integer.parseInt(scanner.nextLine());
+
+        switch (choice) {
+            case 1:
+                hit();
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+
+            case 4:
+
+                break;
+            default:
+                System.out.println("Invalid Choice");
+                break;
+        }
+
+    }
+
+    public static void hit() {
+        giveCardToPlayerFromDrawedCards();
     }
 
     public static void distribute_cards() throws Exception {
@@ -82,7 +129,7 @@ public class View {
 
             ViewHelper.colorText("=====Card=====", "green");
             System.out.println("-> Rank:" + card[0]);
-            System.out.println("-> Suit" + card[1]);
+            System.out.println("-> Suit:" + card[1]);
             ViewHelper.colorText("==============", "green");
 
         }
@@ -93,12 +140,10 @@ public class View {
 
             ViewHelper.colorText("=====Card=====", "yellow");
             System.out.println("-> Rank:" + card[0]);
-            System.out.println("-> Suit" + card[1]);
+            System.out.println("-> Suit:" + card[1]);
             ViewHelper.colorText("==============", "yellow");
 
         }
-
-        ViewHelper.stopProgramUntilButtonIsCliqued("test");
 
     }
 
@@ -115,7 +160,6 @@ public class View {
         Integer[] card = takeCardFromDrawedCards();
 
         dealerCards = CardRepository.add_card_to_collection(dealerCards, card);
-
     }
 
     public static Integer[] takeCardFromDrawedCards() {
@@ -135,7 +179,7 @@ public class View {
         long startTime = System.currentTimeMillis();
         long periodBetweenPastAndFuture = 0;
 
-        while (periodBetweenPastAndFuture < 0) {
+        while (periodBetweenPastAndFuture < 3000) {
 
             System.out.print("\r" + symbols[symbolIndex]);
 

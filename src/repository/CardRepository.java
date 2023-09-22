@@ -127,7 +127,7 @@ public class CardRepository {
 
     public static twoArrays pull_card(Integer[][] cards) {
 
-        int randomIndex = Helper.myRandomNumber(0, cards.length - 1);
+        int randomIndex = Helper.randomNumber(0, cards.length - 1);
 
         twoArrays results = extract_card(cards, randomIndex);
 

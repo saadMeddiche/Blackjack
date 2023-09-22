@@ -10,11 +10,11 @@ public class GamePlay {
         while (true) {
             View.lobby();
 
-            View.start();
+            View.mixing_cards();
 
             View.distribute_cards();
 
-            View.showCardsInHands();
+            View.play_round();
         }
     }
 
