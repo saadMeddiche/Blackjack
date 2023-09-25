@@ -128,7 +128,7 @@ public class View {
         String rank = Integer.toString(r);
         String spacedRank = calculatSpace(rank, 16);
 
-        ViewHelper.colorText("\u001b[47;1m----------------", "red");
+        ViewHelper.colorText("\u001b[47;1m\u001b[4m----------------", "red");
         ViewHelper.colorText("\u001b[47;1m" + spacedRank, "red");
         ViewHelper.colorText("\u001b[47;1m                ", "red");
         ViewHelper.colorText("\u001b[47;1m                ", "red");
