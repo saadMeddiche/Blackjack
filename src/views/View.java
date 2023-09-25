@@ -128,7 +128,7 @@ public class View {
         String rank = Integer.toString(r);
         String spacedRank = calculatSpace(rank, 16);
 
-        ViewHelper.colorText("\u001b[47;1m\u001b[4m----------------", "red");
+        ViewHelper.colorText("\u001b[47;1m----------------", "red");
         ViewHelper.colorText("\u001b[47;1m" + spacedRank, "red");
         ViewHelper.colorText("\u001b[47;1m                ", "red");
         ViewHelper.colorText("\u001b[47;1m                ", "red");
@@ -147,18 +147,28 @@ public class View {
 
         for (Integer[] card : dealerCards) {
 
-            cardShape(card[0], card[1]);
+            ViewHelper.colorText("=====Card=====", "green");
+            System.out.println("-> Rank: " + card[0]);
+            System.out.println("-> Suit: " + getNameOfShape(card[1]));
+            ViewHelper.colorText("==============", "green");
 
-            System.out.println();
+            // cardShape(card[0], card[1]);
+
+            // System.out.println();
         }
 
         ViewHelper.colorText("Player Hand (" + playedCards.length + ")", "yellow");
 
-        for (Integer[] card : dealerCards) {
+        for (Integer[] card : playedCards) {
 
-            cardShape(card[0], card[1]);
+            ViewHelper.colorText("=====Card=====", "yellow");
+            System.out.println("-> Rank: " + card[0]);
+            System.out.println("-> Suit: " + getNameOfShape(card[1]));
+            ViewHelper.colorText("==============", "yellow");
 
-            System.out.println();
+            // cardShape(card[0], card[1]);
+
+            // System.out.println();
         }
 
     }

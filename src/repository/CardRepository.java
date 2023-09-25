@@ -174,8 +174,8 @@ public class CardRepository {
     public static void display(Integer[][] cards) {
         for (int i = 0; i < cards.length; i++) {
             System.out.println("======Card" + i + "======");
-            System.out.println("Rank:" + cards[i][0]);
-            System.out.println("Suit:" + cards[i][1]);
+            System.out.println("->Rank:" + cards[i][0]);
+            System.out.println("->Suit:" + cards[i][1]);
             System.out.println("================");
             System.out.println();
         }
