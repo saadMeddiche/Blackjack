@@ -56,7 +56,7 @@ public class CardRepository {
 
         int index = 0;
 
-        for (int numSuits = 1; numSuits <= 4; numSuits++) {
+        for (int numSuits = 0; numSuits < 4; numSuits++) {
 
             for (int numCardsOfSuit = 1; numCardsOfSuit <= 13; numCardsOfSuit++) {
                 a52cardDeck[index][0] = numCardsOfSuit;
