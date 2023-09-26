@@ -1,6 +1,6 @@
 package core;
 
-import helpers.Helper;
+import helpers.mathHelper.MyMath;
 
 public class CardCore {
 
@@ -10,7 +10,7 @@ public class CardCore {
 
         Integer[][] mixedCards = mix_cards(a52cardDeck);
 
-        Integer numberOfCardsShouldDrawed = Helper.randomNumber(30, 40);
+        Integer numberOfCardsShouldDrawed = MyMath.randomNumber(30, 40);
 
         twoArrays results = draw_card(mixedCards, numberOfCardsShouldDrawed);
 
@@ -94,7 +94,7 @@ public class CardCore {
 
     public twoArrays pull_card(Integer[][] cards) {
 
-        int randomIndex = Helper.randomNumber(0, cards.length - 1);
+        int randomIndex = MyMath.randomNumber(0, cards.length - 1);
 
         twoArrays results = extract_card(cards, randomIndex);
 

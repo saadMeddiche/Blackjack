@@ -1,6 +1,6 @@
-package helpers;
+package helpers.mathHelper;
 
-public class Helper {
+public class MyMath {
 
     public static Integer randomNumber(Integer from, Integer to) {
 

@@ -1,4 +1,4 @@
-package view;
+package helpers.viewHelper;
 
 import helpers.ViewHelper;
 

@@ -3,6 +3,8 @@ package view;
 import java.util.Scanner;
 
 import helpers.ViewHelper;
+import helpers.viewHelper.Animation;
+import helpers.viewHelper.CardShape;
 import services.CardService;
 
 public class View {
