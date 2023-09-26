@@ -63,8 +63,15 @@ public class CardService {
 
     }
 
-    public void playerHit() {
+    public Boolean playerHit() {
+        
         giveCardToPlayerFromDrawedCards();
+
+        if (calculatePLayerCardsValue() > 21) {
+            return false;
+        }
+
+        return true;
     }
 
     public void dealerHit() {

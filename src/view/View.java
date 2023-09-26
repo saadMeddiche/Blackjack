@@ -89,7 +89,17 @@ public class View {
     }
 
     public void hit() {
-        cardService.playerHit();
+        Boolean lessThen21 = cardService.playerHit();
+
+        if (!lessThen21) {
+            ViewHelper.clearConsole();
+
+            showCardsInHands();
+
+            ViewHelper.colorText("Dealer Win", "red");
+
+            ViewHelper.stopProgramUntilButtonIsCliqued("Press Button To Continue");
+        }
     }
 
     public void stand() {
