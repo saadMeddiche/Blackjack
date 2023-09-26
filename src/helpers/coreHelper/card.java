@@ -2,7 +2,7 @@ package helpers.coreHelper;
 
 public class card {
 
-    public int getCardValue(int rank, int valueInHand, Integer[] numAces) {
+    public int getCardValue(int rank, int valueInHand, Integer[] numberOfAces) {
 
         if (isNormalCard(rank)) {
             return rank;
@@ -13,7 +13,7 @@ public class card {
         }
 
         if (isAce(rank)) {
-            numAces[0]++;
+            numberOfAces[0]++;
             return 11;
         }
 

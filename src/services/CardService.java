@@ -2,7 +2,7 @@ package services;
 
 import core.CardCore;
 import core.CardCore.twoArrays;
-import helpers.mathHelper.MyMath;
+import helpers.ViewHelper;
 
 public class CardService {
 
@@ -25,12 +25,56 @@ public class CardService {
     }
 
     public void distribute_cards() {
-        
+
         for (int i = 0; i < 2; i++) {
             giveCardToPlayerFromDrawedCards();
             giveCardToDealerFromDrawedCards();
         }
 
+    }
+
+    public String[] stand() {
+        dealerHit();
+        return result();
+    }
+
+    public String[] result() {
+
+        Integer dealerValue = calculateDealerCardsValue();
+        Integer playerValue = calculatePLayerCardsValue();
+
+        if (playerValue > 21) {
+            return new String[] { "Dealer Win", "red" };
+        }
+
+        if (dealerValue > 21) {
+            return new String[] { "Player Win", "green" };
+
+        }
+
+        switch (Integer.compare(playerValue, dealerValue)) {
+            case 1:
+                return new String[] { "Player Win", "green" };
+            case -1:
+                return new String[] { "Dealer Win", "red" };
+            default:
+                return new String[] { "Tie !!", "yellow" };
+        }
+
+    }
+
+    public void playerHit() {
+        giveCardToPlayerFromDrawedCards();
+    }
+
+    public void dealerHit() {
+        giveCardToDealerFromDrawedCards();
+
+        Integer dealerValue = calculateDealerCardsValue();
+
+        while (dealerValue < 17) {
+            dealerHit();
+        }
     }
 
     public Integer calculatePLayerCardsValue() {

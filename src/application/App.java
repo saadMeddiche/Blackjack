@@ -32,7 +32,9 @@ public class App {
     }
 
     public void distribute_cards() throws Exception {
+
         view.distribute_cards(0);
+        
         cardService.distribute_cards();
     }
 

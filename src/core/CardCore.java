@@ -23,7 +23,7 @@ public class CardCore {
     public Integer calculate_value_in_collection(Integer[][] cards) {
 
         Integer valueInHand = 0;
-        Integer[] numAces = { 0 };
+        Integer[] numberOfAces = { 0 };
 
         if (cards == null) {
             return valueInHand;
@@ -31,16 +31,16 @@ public class CardCore {
 
         for (Integer[] card : cards) {
 
-            int cardValue = cardH.getCardValue(card[0], valueInHand, numAces);
+            int cardValue = cardH.getCardValue(card[0], valueInHand, numberOfAces);
 
             valueInHand += cardValue;
         }
 
-        while (numAces[0] > 0 && valueInHand > 21) {
+        while (numberOfAces[0] > 0 && valueInHand > 21) {
             valueInHand -= 10;
-            numAces[0]--;
+            numberOfAces[0]--;
         }
-        
+
         return valueInHand;
 
     }

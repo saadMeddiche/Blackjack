@@ -69,10 +69,10 @@ public class View {
 
         switch (choice) {
             case 1:
-                cardService.giveCardToPlayerFromDrawedCards();
+                hit();
                 break;
             case 2:
-
+                stand();
                 break;
             case 3:
 
@@ -86,7 +86,24 @@ public class View {
                 break;
         }
 
-        // scanner.close();
+    }
+
+    public void hit() {
+        cardService.playerHit();
+    }
+
+    public void stand() {
+
+        ViewHelper.clearConsole();
+
+        String[] result = cardService.stand();
+
+        showCardsInHands();
+
+        ViewHelper.colorText(result[0], result[1]);
+
+        ViewHelper.stopProgramUntilButtonIsCliqued("Press Button To Continue");
+
     }
 
     public void distribute_cards(long timeOfAnimation) throws Exception {
