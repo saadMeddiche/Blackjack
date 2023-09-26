@@ -1,43 +1,10 @@
-package repository;
+package core;
 
 import helpers.Helper;
 
-public class CardRepository {
+public class CardCore {
 
-    public static void main(String[] args) throws Exception {
-        Integer[][] cards = create_52card_deck();
-        display(cards);
-
-        twoArrays results = pull_card(cards);
-        System.out.println("=======Random Card=======");
-        System.out.println("Rank" + results.card[0]);
-        System.out.println("Suit" + results.card[1]);
-
-        System.out.println("=======Remaining Card=======");
-        display(results.remainingCards);
-
-        System.out.println("=======Mixed Card=======");
-        Integer[][] mixedCards = mix_cards(cards);
-        display(mixedCards);
-
-        twoArrays results1 = draw_card(mixedCards, 2);
-
-        System.out.println("=======Drawed Card=======");
-        display(results1.drawedCards);
-
-        System.out.println("=======Remaining Card=======");
-        display(results1.remainingCards);
-
-        System.out.println("=======Discarded Card=======");
-
-        Integer[][] test = new Integer[0][];
-
-        Integer[][] discradedCards = discard_card(results1.drawedCards,
-                results1.remainingCards, test);
-        display(discradedCards);
-    }
-
-    public static twoArrays get_prepared_cards() {
+    public twoArrays prepare_cards() {
 
         Integer[][] a52cardDeck = create_52card_deck();
 
@@ -50,7 +17,7 @@ public class CardRepository {
         return results;
     }
 
-    public static Integer[][] create_52card_deck() {
+    public Integer[][] create_52card_deck() {
 
         Integer[][] a52cardDeck = new Integer[52][2];
 
@@ -68,7 +35,7 @@ public class CardRepository {
         return a52cardDeck;
     }
 
-    public static Integer[][] discard_card(Integer[][] usedCards, Integer[][] inHandCards, Integer[][] drawedCards) {
+    public Integer[][] discard_card(Integer[][] usedCards, Integer[][] inHandCards, Integer[][] drawedCards) {
 
         Integer[][] discradedCards = new Integer[usedCards.length + inHandCards.length + drawedCards.length][2];
 
@@ -87,7 +54,7 @@ public class CardRepository {
         return discradedCards;
     }
 
-    public static twoArrays draw_card(Integer[][] cards, Integer numberOfCardsShouldDrawed) {
+    public twoArrays draw_card(Integer[][] cards, Integer numberOfCardsShouldDrawed) {
 
         Integer[][] drawedCards = new Integer[numberOfCardsShouldDrawed][2];
 
@@ -109,7 +76,7 @@ public class CardRepository {
 
     }
 
-    public static Integer[][] mix_cards(Integer[][] cards) {
+    public Integer[][] mix_cards(Integer[][] cards) {
 
         Integer[][] mixedCard = new Integer[cards.length][2];
 
@@ -125,7 +92,7 @@ public class CardRepository {
         return mixedCard;
     }
 
-    public static twoArrays pull_card(Integer[][] cards) {
+    public twoArrays pull_card(Integer[][] cards) {
 
         int randomIndex = Helper.randomNumber(0, cards.length - 1);
 
@@ -134,7 +101,7 @@ public class CardRepository {
         return results;
     }
 
-    public static twoArrays extract_card(Integer[][] cards, int index) {
+    public twoArrays extract_card(Integer[][] cards, int index) {
 
         // i didn't do this from first , untile an error appeared
         if (cards.length == 0) {
@@ -156,7 +123,7 @@ public class CardRepository {
         return new twoArrays(card, remainingCards);
     }
 
-    public static Integer[][] add_card_to_collection(Integer[][] collection, Integer[] card) {
+    public Integer[][] add_card_to_collection(Integer[][] collection, Integer[] card) {
 
         int collectionLenght = collection != null ? collection.length : 0;
 
@@ -171,17 +138,7 @@ public class CardRepository {
         return newCollection;
     }
 
-    public static void display(Integer[][] cards) {
-        for (int i = 0; i < cards.length; i++) {
-            System.out.println("======Card" + i + "======");
-            System.out.println("->Rank:" + cards[i][0]);
-            System.out.println("->Suit:" + cards[i][1]);
-            System.out.println("================");
-            System.out.println();
-        }
-    }
-
-    public static class twoArrays {
+    public class twoArrays {
         public Integer[] card;
         public Integer[][] remainingCards;
         public Integer[][] drawedCards;
