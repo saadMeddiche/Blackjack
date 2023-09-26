@@ -102,6 +102,10 @@ public class View {
         }
     }
 
+    public void nextRound() {
+        cardService.nextRound();
+    }
+
     public void stand() {
 
         ViewHelper.clearConsole();

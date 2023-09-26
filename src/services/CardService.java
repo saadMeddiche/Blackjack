@@ -8,7 +8,7 @@ public class CardService {
 
     public CardCore cardCore = new CardCore();
 
-    public Integer[][] inHandsCards = {};
+    // public Integer[][] inHandsCards = {};
     public Integer[][] playedCards = {};
     public Integer[][] dealerCards = {};
     public Integer[][] usedCards = {};
@@ -38,6 +38,22 @@ public class CardService {
         return result();
     }
 
+    public void nextRound() {
+        moveInHandsCardsToUsedCards();
+        cleanHands();
+        distribute_cards();
+    }
+
+    public void moveInHandsCardsToUsedCards() {
+        usedCards = cardCore.move_in_hand_cards_to_used_cards(usedCards, playedCards);
+        usedCards = cardCore.move_in_hand_cards_to_used_cards(usedCards, dealerCards);
+    }
+
+    public void cleanHands() {
+        playedCards = new Integer[0][];
+        dealerCards = new Integer[0][];
+    }
+
     public String[] result() {
 
         Integer dealerValue = calculateDealerCardsValue();
@@ -64,7 +80,7 @@ public class CardService {
     }
 
     public Boolean playerHit() {
-        
+
         giveCardToPlayerFromDrawedCards();
 
         if (calculatePLayerCardsValue() > 21) {
