@@ -25,12 +25,20 @@ public class CardService {
     }
 
     public void distribute_cards() {
-
+        
         for (int i = 0; i < 2; i++) {
             giveCardToPlayerFromDrawedCards();
             giveCardToDealerFromDrawedCards();
         }
 
+    }
+
+    public Integer calculatePLayerCardsValue() {
+        return cardCore.calculate_value_in_collection(playedCards);
+    }
+
+    public Integer calculateDealerCardsValue() {
+        return cardCore.calculate_value_in_collection(dealerCards);
     }
 
     public void giveCardToPlayerFromDrawedCards() {

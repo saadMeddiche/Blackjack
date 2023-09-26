@@ -1,8 +1,11 @@
 package core;
 
+import helpers.coreHelper.card;
 import helpers.mathHelper.MyMath;
 
 public class CardCore {
+
+    card cardH = new card();
 
     public twoArrays prepare_cards() {
 
@@ -15,6 +18,31 @@ public class CardCore {
         twoArrays results = draw_card(mixedCards, numberOfCardsShouldDrawed);
 
         return results;
+    }
+
+    public Integer calculate_value_in_collection(Integer[][] cards) {
+
+        Integer valueInHand = 0;
+        Integer[] numAces = { 0 };
+
+        if (cards == null) {
+            return valueInHand;
+        }
+
+        for (Integer[] card : cards) {
+
+            int cardValue = cardH.getCardValue(card[0], valueInHand, numAces);
+
+            valueInHand += cardValue;
+        }
+
+        while (numAces[0] > 0 && valueInHand > 21) {
+            valueInHand -= 10;
+            numAces[0]--;
+        }
+        
+        return valueInHand;
+
     }
 
     public Integer[][] create_52card_deck() {

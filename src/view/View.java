@@ -109,11 +109,11 @@ public class View {
 
         ViewHelper.clearConsole();
 
-        ViewHelper.colorText("Dealer Hand (" + cardService.dealerCards.length + ")", "green");
+        ViewHelper.colorText("Dealer Hand (" + cardService.calculateDealerCardsValue() + ")", "green");
 
         displayCards(cardService.dealerCards, "green");
 
-        ViewHelper.colorText("Player Hand (" + cardService.playedCards.length + ")", "yellow");
+        ViewHelper.colorText("Player Hand (" + cardService.calculatePLayerCardsValue() + ")", "yellow");
 
         displayCards(cardService.playedCards, "yellow");
 
