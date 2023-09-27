@@ -38,15 +38,10 @@ public class CardService {
         return result();
     }
 
-    public void nextRound() {
-        moveInHandsCardsToUsedCards();
-        cleanHands();
-        distribute_cards();
-    }
-
     public void moveInHandsCardsToUsedCards() {
         usedCards = cardCore.move_in_hand_cards_to_used_cards(usedCards, playedCards);
         usedCards = cardCore.move_in_hand_cards_to_used_cards(usedCards, dealerCards);
+        cleanHands();
     }
 
     public void cleanHands() {
@@ -91,12 +86,12 @@ public class CardService {
     }
 
     public void dealerHit() {
-        giveCardToDealerFromDrawedCards();
 
         Integer dealerValue = calculateDealerCardsValue();
 
         while (dealerValue < 17) {
-            dealerHit();
+            giveCardToDealerFromDrawedCards();
+            dealerValue = calculateDealerCardsValue();
         }
     }
 

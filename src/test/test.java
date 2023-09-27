@@ -2,24 +2,8 @@ package test;
 
 public class test {
     public static void main(String[] args) throws Exception {
-        Integer[] numbers = { 1, 2, 3, 4, 5, 6 };
-
-        for (Integer number : numbers) {
-            System.err.println(number);
-        }
-        System.out.println("=================");
-        test(numbers);
-
-        for (Integer number : numbers) {
-            System.err.println(number);
-        }
+        System.out.println(1_000 + 1_000 + "Hello");
+        System.out.println("Hello" + 1_000 + 1_000);
     }
 
-    public static void test(Integer[] numbers) {
-
-        for (int i = 0; i < numbers.length; i++) {
-
-            numbers[i] = numbers[i] - 1;
-        }
-    }
 }

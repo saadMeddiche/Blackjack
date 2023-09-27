@@ -15,6 +15,21 @@ public class View {
         this.cardService = cardService;
     }
 
+    public void start_game() throws Exception {
+
+        lobby();
+
+        prepare_cards();
+
+        distribute_cards();
+
+        while (true) {
+
+            show_board();
+
+        }
+    }
+
     public void lobby() {
 
         ViewHelper.clearConsole();
@@ -27,13 +42,15 @@ public class View {
         ViewHelper.stopProgramUntilButtonIsCliqued("Press Enter To Start ...");
     }
 
-    public void prepare_cards(long timeOfAnimation) throws Exception {
+    public void prepare_cards() throws Exception {
 
         ViewHelper.clearConsole();
 
+        cardService.prepare_cards();
+
         ViewHelper.colorText("Mixing cards...", "yellow");
 
-        Animation.waitingAnimation(timeOfAnimation);
+        Animation.waitingAnimation(4000);
 
         ViewHelper.clearConsole();
 
@@ -43,7 +60,7 @@ public class View {
 
     }
 
-    public void show_board() {
+    public void show_board() throws Exception {
 
         showCardsInHands();
 
@@ -51,7 +68,7 @@ public class View {
 
     }
 
-    public void control_panel() {
+    public void control_panel() throws Exception {
 
         ViewHelper.colorText("======================", "purple");
         ViewHelper.colorText("Drawed Card: " + cardService.drawedCards.length, "purple");
@@ -88,7 +105,7 @@ public class View {
 
     }
 
-    public void hit() {
+    public void hit() throws Exception {
         Boolean lessThen21 = cardService.playerHit();
 
         if (!lessThen21) {
@@ -99,14 +116,38 @@ public class View {
             ViewHelper.colorText("Dealer Win", "red");
 
             ViewHelper.stopProgramUntilButtonIsCliqued("Press Button To Continue");
+
+            nextRound();
         }
     }
 
-    public void nextRound() {
-        cardService.nextRound();
+    public void nextRound() throws Exception {
+
+        moveInHandsCardsToUsedCards();
+
+        distribute_cards();
+
     }
 
-    public void stand() {
+    public void moveInHandsCardsToUsedCards() throws Exception {
+
+        ViewHelper.clearConsole();
+
+        cardService.moveInHandsCardsToUsedCards();
+
+        ViewHelper.colorText("Moving cards...", "yellow");
+
+        Animation.waitingAnimation(4000);
+
+        ViewHelper.clearConsole();
+
+        ViewHelper.colorText("Cards Has Been Moved !", "green");
+
+        Thread.sleep(2000);
+
+    }
+
+    public void stand() throws Exception {
 
         ViewHelper.clearConsole();
 
@@ -118,15 +159,19 @@ public class View {
 
         ViewHelper.stopProgramUntilButtonIsCliqued("Press Button To Continue");
 
+        nextRound();
+
     }
 
-    public void distribute_cards(long timeOfAnimation) throws Exception {
+    public void distribute_cards() throws Exception {
 
         ViewHelper.clearConsole();
 
+        cardService.distribute_cards();
+
         ViewHelper.colorText("Distributing cards...", "yellow");
 
-        Animation.waitingAnimation(timeOfAnimation);
+        Animation.waitingAnimation(4000);
 
         ViewHelper.clearConsole();
 
