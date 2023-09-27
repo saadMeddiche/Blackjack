@@ -26,6 +26,10 @@ public class CardService {
 
     public void distribute_cards() {
 
+        if (drawedCards.length > 0) {
+            return;
+        }
+
         for (int i = 0; i < 2; i++) {
             giveCardToPlayerFromDrawedCards();
             giveCardToDealerFromDrawedCards();
@@ -60,7 +64,6 @@ public class CardService {
 
         if (dealerValue > 21) {
             return new String[] { "Player Win", "green" };
-
         }
 
         switch (Integer.compare(playerValue, dealerValue)) {
@@ -76,7 +79,9 @@ public class CardService {
 
     public Boolean playerHit() {
 
-        giveCardToPlayerFromDrawedCards();
+        if (!drawedCardsAreEmpty()) {
+            giveCardToPlayerFromDrawedCards();
+        }
 
         if (calculatePLayerCardsValue() > 21) {
             return false;
@@ -89,10 +94,15 @@ public class CardService {
 
         Integer dealerValue = calculateDealerCardsValue();
 
-        while (dealerValue < 17) {
+        while (dealerValue < 17 && !drawedCardsAreEmpty()) {
             giveCardToDealerFromDrawedCards();
             dealerValue = calculateDealerCardsValue();
         }
+    }
+
+    public void discard_card() {
+        cardCore.discard_card(usedCards, remaningCards);
+
     }
 
     public Integer calculatePLayerCardsValue() {
@@ -125,4 +135,12 @@ public class CardService {
 
         return result.card;
     }
+
+    public Boolean drawedCardsAreEmpty() {
+        if (drawedCards.length == 0) {
+            return true;
+        }
+        return false;
+    }
+
 }

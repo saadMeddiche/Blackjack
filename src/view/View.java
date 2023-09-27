@@ -2,6 +2,7 @@ package view;
 
 import java.util.Scanner;
 
+import helpers.Helper;
 import helpers.ViewHelper;
 import helpers.viewHelper.Animation;
 import helpers.viewHelper.CardShape;
@@ -50,7 +51,7 @@ public class View {
 
         ViewHelper.colorText("Mixing cards...", "yellow");
 
-        Animation.waitingAnimation(4000);
+        Animation.waitingAnimation(0);
 
         ViewHelper.clearConsole();
 
@@ -82,20 +83,21 @@ public class View {
         Scanner scanner = new Scanner(System.in);
 
         ViewHelper.colorText("==> Your Move :", "purple");
-        Integer choice = Integer.parseInt(scanner.nextLine());
 
-        switch (choice) {
-            case 1:
+        Object choice = Helper.getInput(scanner, "Integer");
+
+        switch (choice.toString()) {
+            case "1":
                 hit();
                 break;
-            case 2:
+            case "2":
                 stand();
                 break;
-            case 3:
+            case "3":
 
                 break;
 
-            case 4:
+            case "4":
 
                 break;
             default:
@@ -106,6 +108,12 @@ public class View {
     }
 
     public void hit() throws Exception {
+
+        if (cardService.drawedCardsAreEmpty()) {
+            
+            return;
+        }
+
         Boolean lessThen21 = cardService.playerHit();
 
         if (!lessThen21) {
@@ -119,6 +127,31 @@ public class View {
 
             nextRound();
         }
+    }
+
+    public void discard_card() {
+
+    }
+
+    public void stand() throws Exception {
+
+        ViewHelper.clearConsole();
+
+        String[] result = cardService.stand();
+
+        showCardsInHands();
+
+        if (cardService.drawedCardsAreEmpty()) {
+
+            return;
+        }
+
+        ViewHelper.colorText(result[0], result[1]);
+
+        ViewHelper.stopProgramUntilButtonIsCliqued("Press Button To Continue");
+
+        nextRound();
+
     }
 
     public void nextRound() throws Exception {
@@ -137,29 +170,13 @@ public class View {
 
         ViewHelper.colorText("Moving cards...", "yellow");
 
-        Animation.waitingAnimation(4000);
+        Animation.waitingAnimation(0);
 
         ViewHelper.clearConsole();
 
         ViewHelper.colorText("Cards Has Been Moved !", "green");
 
         Thread.sleep(2000);
-
-    }
-
-    public void stand() throws Exception {
-
-        ViewHelper.clearConsole();
-
-        String[] result = cardService.stand();
-
-        showCardsInHands();
-
-        ViewHelper.colorText(result[0], result[1]);
-
-        ViewHelper.stopProgramUntilButtonIsCliqued("Press Button To Continue");
-
-        nextRound();
 
     }
 
@@ -171,7 +188,7 @@ public class View {
 
         ViewHelper.colorText("Distributing cards...", "yellow");
 
-        Animation.waitingAnimation(4000);
+        Animation.waitingAnimation(0);
 
         ViewHelper.clearConsole();
 

@@ -83,11 +83,13 @@ public class CardCore {
         return a52cardDeck;
     }
 
-    public Integer[][] discard_card(Integer[][] usedCards, Integer[][] inHandCards, Integer[][] drawedCards) {
+    public Integer[][] discard_card(Integer[][] usedCards, Integer[][] remaningCards) {
 
-        Integer[][] discradedCards = new Integer[usedCards.length + inHandCards.length + drawedCards.length][2];
+        int length = usedCards.length + remaningCards.length;
 
-        Integer[][][] allCards = { usedCards, inHandCards, drawedCards };
+        Integer[][] discradedCards = new Integer[length][2];
+
+        Integer[][][] allCards = { usedCards, remaningCards };
 
         int indexOfDeck = 0;
 
