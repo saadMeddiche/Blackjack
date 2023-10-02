@@ -8,16 +8,18 @@ public class CardService {
 
     public CardCore cardCore = new CardCore();
 
-    // public Integer[][] inHandsCards = {};
+    // I think there is a better way
+    public Integer[][] tempCards = {};
+
     public Integer[][] playedCards = {};
     public Integer[][] dealerCards = {};
     public Integer[][] usedCards = {};
     public Integer[][] drawedCards = {};
     public Integer[][] remaningCards = {};
 
-    public void prepare_cards() {
+    public void prepare_cards(Integer[][] cards) {
 
-        twoArrays results = cardCore.prepare_cards();
+        twoArrays results = cardCore.prepare_cards(cards);
 
         drawedCards = results.drawedCards;
 
@@ -25,10 +27,6 @@ public class CardService {
     }
 
     public void distribute_cards() {
-
-        if (drawedCards.length > 0) {
-            return;
-        }
 
         for (int i = 0; i < 2; i++) {
             giveCardToPlayerFromDrawedCards();
@@ -43,8 +41,8 @@ public class CardService {
     }
 
     public void moveInHandsCardsToUsedCards() {
-        usedCards = cardCore.move_in_hand_cards_to_used_cards(usedCards, playedCards);
-        usedCards = cardCore.move_in_hand_cards_to_used_cards(usedCards, dealerCards);
+        usedCards = cardCore.merge_two_cards(usedCards, playedCards);
+        usedCards = cardCore.merge_two_cards(usedCards, dealerCards);
         cleanHands();
     }
 
@@ -100,9 +98,19 @@ public class CardService {
         }
     }
 
-    public void discard_card() {
-        cardCore.discard_card(usedCards, remaningCards);
+    public void mergeUsedCardsWithDrawedCards() {
+        usedCards = cardCore.merge_two_cards(usedCards, drawedCards);
+    }
 
+    public void mergeUsedCardsWithRemaningCards() {
+        tempCards = cardCore.merge_two_cards(usedCards, remaningCards);
+    }
+
+    public void discard_card() {
+        mergeUsedCardsWithDrawedCards();
+        mergeUsedCardsWithRemaningCards();
+
+        
     }
 
     public Integer calculatePLayerCardsValue() {
@@ -137,9 +145,20 @@ public class CardService {
     }
 
     public Boolean drawedCardsAreEmpty() {
+
         if (drawedCards.length == 0) {
             return true;
         }
+
+        return false;
+    }
+
+    public Boolean drawedCardsAreLessThen4() {
+
+        if (drawedCards.length < 4) {
+            return true;
+        }
+
         return false;
     }
 

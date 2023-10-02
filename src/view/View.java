@@ -20,7 +20,7 @@ public class View {
 
         lobby();
 
-        prepare_cards();
+        prepare_cards(null);
 
         distribute_cards();
 
@@ -43,11 +43,11 @@ public class View {
         ViewHelper.stopProgramUntilButtonIsCliqued("Press Enter To Start ...");
     }
 
-    public void prepare_cards() throws Exception {
+    public void prepare_cards(Integer[][] cards) throws Exception {
 
         ViewHelper.clearConsole();
 
-        cardService.prepare_cards();
+        cardService.prepare_cards(cards);
 
         ViewHelper.colorText("Mixing cards...", "yellow");
 
@@ -110,7 +110,7 @@ public class View {
     public void hit() throws Exception {
 
         if (cardService.drawedCardsAreEmpty()) {
-            
+            stand();
             return;
         }
 
@@ -129,7 +129,21 @@ public class View {
         }
     }
 
-    public void discard_card() {
+    public void discard_card() throws Exception {
+
+        ViewHelper.clearConsole();
+
+        cardService.discard_card();
+
+        ViewHelper.colorText("Discarding cards...", "yellow");
+
+        Animation.waitingAnimation(0);
+
+        ViewHelper.clearConsole();
+
+        ViewHelper.colorText("Cards Has Been Discarded !", "green");
+
+        Thread.sleep(2000);
 
     }
 
@@ -140,11 +154,6 @@ public class View {
         String[] result = cardService.stand();
 
         showCardsInHands();
-
-        if (cardService.drawedCardsAreEmpty()) {
-
-            return;
-        }
 
         ViewHelper.colorText(result[0], result[1]);
 
@@ -157,6 +166,15 @@ public class View {
     public void nextRound() throws Exception {
 
         moveInHandsCardsToUsedCards();
+
+        if (cardService.drawedCardsAreLessThen4()) {
+
+            discard_card();
+
+            prepare_cards(cardService.tempCards);
+
+            cardService.usedCards = new Integer[0][];
+        }
 
         distribute_cards();
 
