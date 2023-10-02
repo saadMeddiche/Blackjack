@@ -9,7 +9,7 @@ public class main {
 
         View app = new View(cardService);
 
-        app.start_game();
+        app.open_application();
     }
 
 }

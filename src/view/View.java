@@ -6,48 +6,124 @@ import helpers.Helper;
 import helpers.ViewHelper;
 import helpers.viewHelper.Animation;
 import helpers.viewHelper.CardShape;
+import core.CardCore.twoArrays;
 import services.CardService;
 
 public class View {
 
     public CardService cardService;
+    public Long animationTime = 4000L; // Mounir L
 
     public View(CardService cardService) {
         this.cardService = cardService;
     }
 
-    public void start_game() throws Exception {
+    public void open_application() throws Exception {
 
-        lobby();
+        main_menu();
 
-        prepare_cards(null);
+        // If Player want to exit from application
+        if (!wanna_play())
+            System.exit(0);
 
-        distribute_cards();
+        // If Player Want To Play
 
-        while (true) {
-
-            show_board();
-
-        }
+        start_game();
     }
 
-    public void lobby() {
+    public void main_menu() {
 
         ViewHelper.clearConsole();
 
         ViewHelper.colorText("======== Welcome To AnassCazino ========\n", "red");
 
-        String description = "Lorem ipsum dolor sit amet, consectetur adipiscing \n elit. Donec egestas vitae mi quis maximus.\n Nullam porta urna et ipsum aliquam, eu congue lorem tincidunt.\n Maecenas gravida nisi sed condimentum ultrices. \n";
+        String description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nDonec egestas vitae mi quis maximus.\nNullam porta urna et ipsum aliquam, eu congue lorem tincidunt.\nMaecenas gravida nisi sed condimentum ultrices.\n";
         ViewHelper.colorText(description, "green");
 
-        ViewHelper.stopProgramUntilButtonIsCliqued("Press Enter To Start ...");
     }
 
-    public void prepare_cards(Integer[][] cards) throws Exception {
+    public Boolean wanna_play() {
+
+        Scanner scanner = new Scanner(System.in);
+        Object choice = null;
+
+        while (true) {
+
+            ViewHelper.colorText("Press 'y' to start the game Or 'n' to exist", "white");
+            choice = Helper.getInput(scanner, "String");
+
+            switch (choice.toString()) {
+                case "y":
+                    return true;
+                case "n":
+                    return false;
+                default:
+                    System.out.println("Invalid Choice");
+                    break;
+            }
+        }
+    }
+
+    public void start_game() throws Exception {
+
+        Integer[][] newDeck = get_new_deck_of_cards();
+
+        while (true) {
+
+            Integer[][] mixedCards = mix_cards(newDeck);
+
+            draw_cards(mixedCards);
+
+            distribute_cards();
+
+            while (true) {
+
+                show_cards_in_hands();
+
+                display_choices();
+
+                Object choice = choose_a_choice();
+
+                excute_choice(choice);
+
+                if (cardService.drawedCardsAreLessThen4()) {
+                    move_cards_in_hand_to_used_cards();
+                    newDeck = discard_card();
+                    cardService.resetData();
+                    break;
+                }
+
+                next_round();
+
+            }
+        }
+
+    }
+
+    public Integer[][] get_new_deck_of_cards() throws Exception {
 
         ViewHelper.clearConsole();
 
-        cardService.prepare_cards(cards);
+        Integer[][] newDeck = cardService.get_new_deck_of_cards();
+
+        ViewHelper.colorText("Getting a new deck of cards...", "yellow");
+
+        Animation.waitingAnimation(0);
+
+        ViewHelper.clearConsole();
+
+        ViewHelper.colorText("Deck has been getted", "green");
+
+        Thread.sleep(2000);
+
+        return newDeck;
+    }
+
+    public Integer[][] mix_cards(Integer[][] cards) throws Exception {
+
+        ViewHelper.clearConsole();
+
+        Integer[][] mixedCards = cardService.mix_cards(cards);
 
         ViewHelper.colorText("Mixing cards...", "yellow");
 
@@ -59,17 +135,83 @@ public class View {
 
         Thread.sleep(2000);
 
-    }
-
-    public void show_board() throws Exception {
-
-        showCardsInHands();
-
-        control_panel();
+        return mixedCards;
 
     }
 
-    public void control_panel() throws Exception {
+    public Integer[][] draw_cards(Integer[][] cards) throws Exception {
+
+        ViewHelper.clearConsole();
+
+        twoArrays results = cardService.draw_cards(cards);
+
+        ViewHelper.colorText("Drawing cards...", "yellow");
+
+        Animation.waitingAnimation(0);
+
+        ViewHelper.clearConsole();
+
+        ViewHelper.colorText("Cards Has Been Drawed !", "green");
+
+        Thread.sleep(2000);
+
+        return results.drawedCards;
+    }
+
+    public void show_cards_in_hands() {
+
+        ViewHelper.clearConsole();
+
+        ViewHelper.colorText("Dealer Hand (" + cardService.calculateDealerCardsValue() + ")", "green");
+
+        display_cards(cardService.dealerCards, "green");
+
+        ViewHelper.colorText("Player Hand (" + cardService.calculatePLayerCardsValue() + ")", "yellow");
+
+        display_cards(cardService.playedCards, "yellow");
+
+    }
+
+    public void display_cards(Integer[][] cards, String color) {
+
+        for (Integer[] card : cards) {
+            ViewHelper.colorText("=====Card=====", color);
+            System.out.println("-> Rank: " + card[0]);
+            System.out.println("-> Suit: " + CardShape.getNameOfShape(card[1]));
+            ViewHelper.colorText("==============", color);
+        }
+    }
+
+    public Object choose_a_choice() {
+
+        Scanner scanner = new Scanner(System.in);
+
+        ViewHelper.colorText("==> Your Move :", "purple");
+
+        Object choice = Helper.getInput(scanner, "Integer");
+
+        return choice;
+    }
+
+    public void excute_choice(Object choice) throws Exception {
+        switch (choice.toString()) {
+            case "1":
+                hit();
+                break;
+            case "2":
+                stand();
+                break;
+            case "3":
+                break;
+            case "4":
+                break;
+            default:
+                System.out.println("Invalid Choice");
+                break;
+        }
+    }
+
+    public void display_choices() throws Exception {
 
         ViewHelper.colorText("======================", "purple");
         ViewHelper.colorText("Drawed Card: " + cardService.drawedCards.length, "purple");
@@ -80,60 +222,55 @@ public class View {
         ViewHelper.colorText("3. Double Down", "purple");
         ViewHelper.colorText("4. Split", "purple");
 
-        Scanner scanner = new Scanner(System.in);
-
-        ViewHelper.colorText("==> Your Move :", "purple");
-
-        Object choice = Helper.getInput(scanner, "Integer");
-
-        switch (choice.toString()) {
-            case "1":
-                hit();
-                break;
-            case "2":
-                stand();
-                break;
-            case "3":
-
-                break;
-
-            case "4":
-
-                break;
-            default:
-                System.out.println("Invalid Choice");
-                break;
-        }
-
     }
 
     public void hit() throws Exception {
 
         if (cardService.drawedCardsAreEmpty()) {
-            stand();
+
+            ViewHelper.clearConsole();
+
+            show_cards_in_hands();
+
+            display_winner();
+
             return;
         }
 
-        Boolean lessThen21 = cardService.playerHit();
+        cardService.playerHit();
 
-        if (!lessThen21) {
+        if (cardService.player_has_depassed_21()) {
+
             ViewHelper.clearConsole();
 
-            showCardsInHands();
+            show_cards_in_hands();
 
             ViewHelper.colorText("Dealer Win", "red");
 
             ViewHelper.stopProgramUntilButtonIsCliqued("Press Button To Continue");
-
-            nextRound();
         }
+
     }
 
-    public void discard_card() throws Exception {
+    public void stand() throws Exception {
 
         ViewHelper.clearConsole();
 
-        cardService.discard_card();
+        cardService.dealerHit();
+
+        show_cards_in_hands();
+
+        display_winner();
+
+        ViewHelper.stopProgramUntilButtonIsCliqued("Press Button To Continue");
+
+    }
+
+    public Integer[][] discard_card() throws Exception {
+
+        ViewHelper.clearConsole();
+
+        Integer[][] discardedCards = cardService.discard_card();
 
         ViewHelper.colorText("Discarding cards...", "yellow");
 
@@ -145,54 +282,37 @@ public class View {
 
         Thread.sleep(2000);
 
+        return discardedCards;
+
     }
 
-    public void stand() throws Exception {
+    public void display_winner() {
 
-        ViewHelper.clearConsole();
-
-        String[] result = cardService.stand();
-
-        showCardsInHands();
+        String[] result = cardService.result();
 
         ViewHelper.colorText(result[0], result[1]);
-
-        ViewHelper.stopProgramUntilButtonIsCliqued("Press Button To Continue");
-
-        nextRound();
-
     }
 
-    public void nextRound() throws Exception {
+    public void next_round() throws Exception {
 
-        moveInHandsCardsToUsedCards();
-
-        if (cardService.drawedCardsAreLessThen4()) {
-
-            discard_card();
-
-            prepare_cards(cardService.tempCards);
-
-            cardService.usedCards = new Integer[0][];
-        }
+        move_cards_in_hand_to_used_cards();
 
         distribute_cards();
-
     }
 
-    public void moveInHandsCardsToUsedCards() throws Exception {
+    public void move_cards_in_hand_to_used_cards() throws Exception {
 
         ViewHelper.clearConsole();
 
         cardService.moveInHandsCardsToUsedCards();
 
-        ViewHelper.colorText("Moving cards...", "yellow");
+        ViewHelper.colorText("Removing cards From Hands ...", "yellow");
 
         Animation.waitingAnimation(0);
 
         ViewHelper.clearConsole();
 
-        ViewHelper.colorText("Cards Has Been Moved !", "green");
+        ViewHelper.colorText("Cards Has Been Removed !", "green");
 
         Thread.sleep(2000);
 
@@ -214,30 +334,6 @@ public class View {
 
         Thread.sleep(2000);
 
-    }
-
-    public void showCardsInHands() {
-
-        ViewHelper.clearConsole();
-
-        ViewHelper.colorText("Dealer Hand (" + cardService.calculateDealerCardsValue() + ")", "green");
-
-        displayCards(cardService.dealerCards, "green");
-
-        ViewHelper.colorText("Player Hand (" + cardService.calculatePLayerCardsValue() + ")", "yellow");
-
-        displayCards(cardService.playedCards, "yellow");
-
-    }
-
-    public void displayCards(Integer[][] cards, String color) {
-
-        for (Integer[] card : cards) {
-            ViewHelper.colorText("=====Card=====", color);
-            System.out.println("-> Rank: " + card[0]);
-            System.out.println("-> Suit: " + CardShape.getNameOfShape(card[1]));
-            ViewHelper.colorText("==============", color);
-        }
     }
 
 }

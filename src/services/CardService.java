@@ -3,27 +3,38 @@ package services;
 import core.CardCore;
 import core.CardCore.twoArrays;
 import helpers.ViewHelper;
+import helpers.mathHelper.MyMath;
 
 public class CardService {
 
     public CardCore cardCore = new CardCore();
 
-    // I think there is a better way
-    public Integer[][] tempCards = {};
-
+    public Integer[][] discardedCards = {};
     public Integer[][] playedCards = {};
     public Integer[][] dealerCards = {};
     public Integer[][] usedCards = {};
     public Integer[][] drawedCards = {};
     public Integer[][] remaningCards = {};
 
-    public void prepare_cards(Integer[][] cards) {
+    public twoArrays draw_cards(Integer[][] cards) {
 
-        twoArrays results = cardCore.prepare_cards(cards);
+        Integer numberOfCardsShouldDrawed = MyMath.randomNumber(30, 40);
+
+        twoArrays results = cardCore.draw_cards(cards, numberOfCardsShouldDrawed);
 
         drawedCards = results.drawedCards;
 
         remaningCards = results.remainingCards;
+
+        return results;
+    }
+
+    public Integer[][] mix_cards(Integer[][] cards) {
+        return cardCore.mix_cards(cards);
+    }
+
+    public Integer[][] get_new_deck_of_cards() {
+        return cardCore.create_52card_deck();
     }
 
     public void distribute_cards() {
@@ -33,11 +44,6 @@ public class CardService {
             giveCardToDealerFromDrawedCards();
         }
 
-    }
-
-    public String[] stand() {
-        dealerHit();
-        return result();
     }
 
     public void moveInHandsCardsToUsedCards() {
@@ -75,17 +81,9 @@ public class CardService {
 
     }
 
-    public Boolean playerHit() {
-
-        if (!drawedCardsAreEmpty()) {
+    public void playerHit() {
+        if (!drawedCardsAreEmpty())
             giveCardToPlayerFromDrawedCards();
-        }
-
-        if (calculatePLayerCardsValue() > 21) {
-            return false;
-        }
-
-        return true;
     }
 
     public void dealerHit() {
@@ -103,14 +101,15 @@ public class CardService {
     }
 
     public void mergeUsedCardsWithRemaningCards() {
-        tempCards = cardCore.merge_two_cards(usedCards, remaningCards);
+        discardedCards = cardCore.merge_two_cards(usedCards, remaningCards);
     }
 
-    public void discard_card() {
+    public Integer[][] discard_card() {
+
         mergeUsedCardsWithDrawedCards();
         mergeUsedCardsWithRemaningCards();
 
-        
+        return discardedCards;
     }
 
     public Integer calculatePLayerCardsValue() {
@@ -160,6 +159,24 @@ public class CardService {
         }
 
         return false;
+    }
+
+    public Boolean player_has_depassed_21() {
+
+        if (calculatePLayerCardsValue() > 21) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public void resetData() {
+        discardedCards = new Integer[0][];
+        playedCards = new Integer[0][];
+        dealerCards = new Integer[0][];
+        usedCards = new Integer[0][];
+        drawedCards = new Integer[0][];
+        remaningCards = new Integer[0][];
     }
 
 }

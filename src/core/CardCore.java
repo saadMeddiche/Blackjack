@@ -7,18 +7,18 @@ public class CardCore {
 
     card cardH = new card();
 
-    public twoArrays prepare_cards(Integer[][] cards) {
+    // public twoArrays prepare_cards(Integer[][] cards) {
 
-        Integer[][] a52cardDeck = (cards == null) ? create_52card_deck() : cards;
+    //     Integer[][] a52cardDeck = (cards == null) ? create_52card_deck() : cards;
 
-        Integer[][] mixedCards = mix_cards(a52cardDeck);
+    //     Integer[][] mixedCards = mix_cards(a52cardDeck);
 
-        Integer numberOfCardsShouldDrawed = MyMath.randomNumber(30, 40);
+    //     Integer numberOfCardsShouldDrawed = MyMath.randomNumber(30, 40);
 
-        twoArrays results = draw_card(mixedCards, numberOfCardsShouldDrawed);
+    //     twoArrays results = draw_card(mixedCards, numberOfCardsShouldDrawed);
 
-        return results;
-    }
+    //     return results;
+    // }
 
     // public Integer[][] move_in_hand_cards_to_used_cards(Integer[][] inHandCards,
     // Integer[][] usedCards) {
@@ -114,7 +114,7 @@ public class CardCore {
         return mergedCards;
     }
 
-    public twoArrays draw_card(Integer[][] cards, Integer numberOfCardsShouldDrawed) {
+    public twoArrays draw_cards(Integer[][] cards, Integer numberOfCardsShouldDrawed) {
 
         Integer[][] drawedCards = new Integer[numberOfCardsShouldDrawed][2];
 
@@ -138,7 +138,9 @@ public class CardCore {
 
     public Integer[][] mix_cards(Integer[][] cards) {
 
-        Integer[][] mixedCard = new Integer[cards.length][2];
+        Integer lengthOfCards = (cards != null) ? cards.length : 0;
+
+        Integer[][] mixedCard = new Integer[lengthOfCards][2];
 
         twoArrays results = pull_card(cards);
 
@@ -153,6 +155,10 @@ public class CardCore {
     }
 
     public twoArrays pull_card(Integer[][] cards) {
+
+        if (cards == null) {
+            return null;
+        }
 
         int randomIndex = MyMath.randomNumber(0, cards.length - 1);
 

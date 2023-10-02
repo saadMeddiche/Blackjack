@@ -23,3 +23,7 @@ Source 1 : https://gist.github.com/dominikwilkowski/60eed2ea722183769d586c76f220
 # Integer.Compare
 
 Source 1 : https://www.geeksforgeeks.org/java-integer-compare-method/
+
+# How To End Java Program
+
+Source 1: https://linuxhint.com/end-java-program/#:~:text=You%20can%20end%20a%20Java,terminates%20the%20currently%20running%20JVM.
