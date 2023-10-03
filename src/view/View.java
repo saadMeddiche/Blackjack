@@ -87,13 +87,25 @@ public class View {
                 excute_choice(choice);
 
                 if (cardService.drawedCardsAreLessThen4()) {
+
+                    ViewHelper.clearConsole();
+
+                    ViewHelper.colorText("No Enought cards to play", "red");
+
+                    ViewHelper.stopProgramUntilButtonIsCliqued("Click enter to prepare new prepared cards");
+
                     move_cards_in_hand_to_used_cards();
+
                     newDeck = discard_card();
+
                     cardService.resetData();
+
                     break;
                 }
 
-                next_round();
+                if (!choice.equals(1)) {
+                    next_round();
+                }
 
             }
         }
@@ -108,11 +120,11 @@ public class View {
 
         ViewHelper.colorText("Getting a new deck of cards...", "yellow");
 
-        Animation.waitingAnimation(0);
+        Animation.waitingAnimation(animationTime);
 
         ViewHelper.clearConsole();
 
-        ViewHelper.colorText("Deck has been getted", "green");
+        ViewHelper.colorText("Deck has been getted !", "green");
 
         Thread.sleep(2000);
 
@@ -127,7 +139,7 @@ public class View {
 
         ViewHelper.colorText("Mixing cards...", "yellow");
 
-        Animation.waitingAnimation(0);
+        Animation.waitingAnimation(animationTime);
 
         ViewHelper.clearConsole();
 
@@ -147,7 +159,7 @@ public class View {
 
         ViewHelper.colorText("Drawing cards...", "yellow");
 
-        Animation.waitingAnimation(0);
+        Animation.waitingAnimation(animationTime);
 
         ViewHelper.clearConsole();
 
@@ -234,6 +246,8 @@ public class View {
 
             display_winner();
 
+            ViewHelper.stopProgramUntilButtonIsCliqued("Press Button To Continue");
+
             return;
         }
 
@@ -248,6 +262,9 @@ public class View {
             ViewHelper.colorText("Dealer Win", "red");
 
             ViewHelper.stopProgramUntilButtonIsCliqued("Press Button To Continue");
+
+            next_round();
+
         }
 
     }
@@ -274,7 +291,7 @@ public class View {
 
         ViewHelper.colorText("Discarding cards...", "yellow");
 
-        Animation.waitingAnimation(0);
+        Animation.waitingAnimation(animationTime);
 
         ViewHelper.clearConsole();
 
@@ -291,6 +308,7 @@ public class View {
         String[] result = cardService.result();
 
         ViewHelper.colorText(result[0], result[1]);
+
     }
 
     public void next_round() throws Exception {
@@ -308,7 +326,7 @@ public class View {
 
         ViewHelper.colorText("Removing cards From Hands ...", "yellow");
 
-        Animation.waitingAnimation(0);
+        Animation.waitingAnimation(animationTime);
 
         ViewHelper.clearConsole();
 
@@ -326,7 +344,7 @@ public class View {
 
         ViewHelper.colorText("Distributing cards...", "yellow");
 
-        Animation.waitingAnimation(0);
+        Animation.waitingAnimation(animationTime);
 
         ViewHelper.clearConsole();
 

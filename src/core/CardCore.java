@@ -7,41 +7,6 @@ public class CardCore {
 
     card cardH = new card();
 
-    // public twoArrays prepare_cards(Integer[][] cards) {
-
-    //     Integer[][] a52cardDeck = (cards == null) ? create_52card_deck() : cards;
-
-    //     Integer[][] mixedCards = mix_cards(a52cardDeck);
-
-    //     Integer numberOfCardsShouldDrawed = MyMath.randomNumber(30, 40);
-
-    //     twoArrays results = draw_card(mixedCards, numberOfCardsShouldDrawed);
-
-    //     return results;
-    // }
-
-    // public Integer[][] move_in_hand_cards_to_used_cards(Integer[][] inHandCards,
-    // Integer[][] usedCards) {
-
-    // Integer[][] newUsedCards = new Integer[inHandCards.length +
-    // usedCards.length][];
-
-    // Integer[][][] allCards = { inHandCards, usedCards };
-
-    // int indexOFNewUsedCards = 0;
-
-    // for (Integer[][] cards : allCards) {
-
-    // for (int i = 0; i < cards.length; i++) {
-    // newUsedCards[indexOFNewUsedCards] = cards[i];
-    // indexOFNewUsedCards++;
-    // }
-    // }
-
-    // return newUsedCards;
-
-    // }
-
     public Integer calculate_value_in_collection(Integer[][] cards) {
 
         Integer valueInHand = 0;
