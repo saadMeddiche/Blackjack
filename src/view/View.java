@@ -12,7 +12,7 @@ import services.CardService;
 public class View {
 
     public CardService cardService;
-    public Long animationTime = 4000L; // Mounir L
+    public Long animationTime = 0L; // Mounir L
 
     public View(CardService cardService) {
         this.cardService = cardService;
@@ -178,20 +178,31 @@ public class View {
 
         display_cards(cardService.dealerCards, "green");
 
+        ViewHelper.colorText("==========", "green");
+
+        System.out.println();
+
         ViewHelper.colorText("Player Hand (" + cardService.calculatePLayerCardsValue() + ")", "yellow");
 
         display_cards(cardService.playedCards, "yellow");
+
+        ViewHelper.colorText("==========", "yellow");
+
+        System.out.println();
 
     }
 
     public void display_cards(Integer[][] cards, String color) {
 
-        for (Integer[] card : cards) {
-            ViewHelper.colorText("=====Card=====", color);
-            System.out.println("-> Rank: " + card[0]);
-            System.out.println("-> Suit: " + CardShape.getNameOfShape(card[1]));
-            ViewHelper.colorText("==============", color);
-        }
+        CardShape.print(cards);
+
+        // for (Integer[] card : cards) {
+
+        // ViewHelper.colorText("=====Card=====", color);
+        // System.out.println("-> Rank: " + card[0]);
+        // System.out.println("-> Suit: " + CardShape.getNameOfShape(card[1]));
+        // ViewHelper.colorText("==============", color);
+        // }
     }
 
     public Object choose_a_choice() {
