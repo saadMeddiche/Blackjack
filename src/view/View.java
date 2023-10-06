@@ -12,7 +12,7 @@ import services.CardService;
 public class View {
 
     public CardService cardService;
-    public Long animationTime = 0L; // Mounir L
+    public Long animationTime = 4000L; // Mounir L
 
     public View(CardService cardService) {
         this.cardService = cardService;

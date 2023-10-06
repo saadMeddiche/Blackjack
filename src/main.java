@@ -10,6 +10,7 @@ public class main {
         View app = new View(cardService);
 
         app.open_application();
+
     }
 
 }
